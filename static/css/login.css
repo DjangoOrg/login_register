@@ -1,0 +1,16 @@
+body{
+    background-color: #eee;
+    background-image: url("/static/imag/login.jpg");
+}
+.form-login{
+    padding: 15px;
+    max-width: 330px;
+    margin:0 auto
+}
+
+.form-login input[type="text"] {
+  margin-bottom: -1px;
+}
+.form-login input[type="password"] {
+  margin-bottom: 10px;
+}
