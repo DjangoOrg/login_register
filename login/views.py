@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from . import models
+from . import forms
 # Create your views here.
 def index(request):
     pass
@@ -8,11 +9,11 @@ def index(request):
 
 def login(request):
     if request.method=="POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        login_form = forms.UserForm(request.POST)
         message = "所有字段都必须填写!"
-        if username and password:
-            username = username.strip()
+        if login_form.is_valid():
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
             try:
                 user = models.User.objects.get(name=username)
                 if user.password == password:
@@ -21,8 +22,9 @@ def login(request):
                     message = "密码不正确！"
             except:
                 message = "用户不存在"
-        return render(request,'login/login.html',{'message':message})
-    return render(request,'login/login.html')
+        return render(request,'login/login.html',locals())
+    login_form = forms.UserForm()
+    return render(request,'login/login.html',locals())
 def register(request):
     pass
     return render(request,'login/register.html')
